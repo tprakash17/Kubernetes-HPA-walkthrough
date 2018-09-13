@@ -12,7 +12,8 @@ App exposes 2 end-points:
 1. clone repo
 2. cd node_app
 3. Build docker image
-   ``` sudo docker build -t nodejs-v1 .
+   ``` 
+   sudo docker build -t nodejs-v1 .
    ```
 
 4. Verify app locally by running container 
