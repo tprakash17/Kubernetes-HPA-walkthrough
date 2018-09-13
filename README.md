@@ -26,6 +26,7 @@ App exposes 2 end-points:
   Note: nodejs-v1:latest image has been pushed to dockerhub as well and its publically available. (docker pull tarun/nodejs-v1)
 
 4 Access in your local browser
+  
   http://localhost:8080
   
   http://localhost:8080/version
