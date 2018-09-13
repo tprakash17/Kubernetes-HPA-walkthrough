@@ -95,6 +95,23 @@ $ kubectl run -i --tty load-generator --image=busybox /bin/sh -n nodejs
 Hit enter for command prompt
 
 $ while true; do wget -q -O- http://10.43.80.18; done
+
+
+
+root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# watch kubectl get hpa -n nodejs
+Every 2.0s: kubectl get hpa -n nodejs                                                                                                           Thu Sep 13 18:50:29 2018
+
+NAME              REFERENCE                    TARGETS     MINPODS   MAXPODS   REPLICAS   AGE
+node-deployment   Deployment/node-deployment   34% / 30%   2         10        4          14m
+```
+
+Now you can deployment has scaled to 4 copies automatically as load increased more than 30 %
+
+```
+root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# kubectl get deploy -n nodejs
+NAME              DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+load-generator    1         1         1            1           12m
+node-deployment   4         4         4            4           1h
 ```
 
 Watch HPA
