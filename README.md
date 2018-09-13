@@ -1,8 +1,6 @@
-# nodejs-sample-app-kubernetes
-nodejs sample app with Dockerfile
 
-Sample nodejs app
-App exposes 2 end-points:
+#Introduction
+This is sample nodejs app which exposes 2 end-points:
 
 1. / - Returns Hello
 2. /version - increments and returns count everytime this api is hit/refreshed
