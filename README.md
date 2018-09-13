@@ -76,23 +76,10 @@ $ kubectl autoscale deployment node-deployment --cpu-percent=40 --min=2 --max=10
 ## Scaler status 
 
 ```
-root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# kubectl get all,ing -n nodejs
-NAME                                  READY     STATUS    RESTARTS   AGE
-po/node-deployment-548dd87cc6-8hdsn   1/1       Running   0          2m
-po/node-deployment-548dd87cc6-ct724   1/1       Running   0          2m
-
-NAME              CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
-svc/nodeapp-svc   10.43.80.18   <nodes>       80:31283/TCP   1h
-
+root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# kubectl get hpa -n nodejs
 NAME                  REFERENCE                    TARGETS    MINPODS   MAXPODS   REPLICAS   AGE
 hpa/node-deployment   Deployment/node-deployment   0% / 30%   2         10        2          36s
 
-NAME                     DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deploy/node-deployment   2         2         2            2           1h
-
-NAME                            DESIRED   CURRENT   READY     AGE
-rs/node-deployment-548dd87cc6   2         2         2         2m
-rs/node-deployment-97f45c487    0         0         0         1h
 ```
 
 ## Increase load
@@ -104,7 +91,11 @@ Hit enter for command prompt
 # while true; do wget -q -O- http://10.43.80.18; done
 
 Note: Change the clusterIP it may be different be when you deploy.
+```
 
+## Watch scaler 
+
+```
 root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# watch kubectl get hpa -n nodejs
 Every 2.0s: kubectl get hpa -n nodejs                                                                                                           Thu Sep 13 18:50:29 2018
 
