@@ -31,9 +31,10 @@ This is sample nodejs app which exposes 2 end-points:
 
 # Deploy app in kubernetes
 
-## create deployment
+## create namespace and the deployment
 
 ```
+root@Blr-Tarunp:~# kubectl create ns nodejs
 root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# kubectl create -f nodejs-initial-deploy.yaml
 deployment "node-deployment" created
 
@@ -46,7 +47,7 @@ po/node-deployment-97f45c487-jphkt   1/1       Running       0          1h
 po/node-deployment-97f45c487-rpch4   1/1       Running       0          1h
 
 NAME              CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
-svc/nodeapp-svc   10.43.80.18   <nodes>       80:31283/TCP   1h
+svc/nodeapp-svc   10.43.80.18   <nodes>       80:30787/TCP   1h
 
 NAME                     DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 deploy/node-deployment   2         2         2            2           1h
@@ -67,11 +68,13 @@ Selector:               app=nodeapp,color=blue,env=dev
 Type:                   NodePort
 IP:                     10.43.80.18
 Port:                   http    80/TCP
-NodePort:               http    31283/TCP
+NodePort:               http    30787/TCP
 Endpoints:              10.42.142.245:3000,10.42.252.214:3000
 Session Affinity:       None
 Events:                 <none>
 ```
+
+You can access the application by http://NODEIP:<SERVICE-PORT> or http://NODEIP:<SERVICE-PORT>/version (in my case it was 30787) 
 
 ## Horizontal scaling  
 
@@ -138,7 +141,7 @@ node-deployment   Deployment/node-deployment   11% / 30%   2         10        5
 
 ## Rolling update
 
-Go to nodejs-sample-app-kubernetes/kubernetes DIR run the script to do rolling update.
+Go to nodejs-sample-app-kubernetes/kubernetes DIR run the script to do rolling update. Its always good to scale the app before doing rolling-upgrade to avoid performance degradation.
 
 ```
 root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes# ./rolling-update.sh
