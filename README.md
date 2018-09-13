@@ -34,6 +34,12 @@ This is sample nodejs app which exposes 2 end-points:
 ## create deployment
 
 ```
+root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# kubectl create -f nodejs-initial-deploy.yaml
+deployment "node-deployment" created
+
+root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# kubectl create -f nodejs-svc-nodeport.yaml
+service "nodeapp-svc" created
+
 root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# kubectl get all,ing -n nodejs
 NAME                                 READY     STATUS        RESTARTS   AGE
 po/node-deployment-97f45c487-jphkt   1/1       Running       0          1h
