@@ -47,10 +47,11 @@ deploy/node-deployment   2         2         2            2           1h
 
 NAME                           DESIRED   CURRENT   READY     AGE
 rs/node-deployment-97f45c487   2         2         2         1h
+```
 
+## Describe svc 
 
-Describe svc 
-
+```
 root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# kubectl describe svc/nodeapp-svc -n nodejs
 Name:                   nodeapp-svc
 Namespace:              nodejs
@@ -64,13 +65,17 @@ NodePort:               http    31283/TCP
 Endpoints:              10.42.142.245:3000,10.42.252.214:3000
 Session Affinity:       None
 Events:                 <none>
+```
 
-Horizontal scaling 
+## Horizontal scaling  
 
+```
 $ kubectl autoscale deployment node-deployment --cpu-percent=40 --min=2 --max=10 -n nodejs
+```
 
+## Scaler status 
 
-Scaler status 
+```
 root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# kubectl get all,ing -n nodejs
 NAME                                  READY     STATUS    RESTARTS   AGE
 po/node-deployment-548dd87cc6-8hdsn   1/1       Running   0          2m
@@ -88,15 +93,17 @@ deploy/node-deployment   2         2         2            2           1h
 NAME                            DESIRED   CURRENT   READY     AGE
 rs/node-deployment-548dd87cc6   2         2         2         2m
 rs/node-deployment-97f45c487    0         0         0         1h
+```
 
-Increase load
+## Increase load
+```
 $ kubectl run -i --tty load-generator --image=busybox /bin/sh -n nodejs
 
 Hit enter for command prompt
 
-$ while true; do wget -q -O- http://10.43.80.18; done
+# while true; do wget -q -O- http://10.43.80.18; done
 
-
+Note: Change the clusterIP it may be different be when you deploy.
 
 root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# watch kubectl get hpa -n nodejs
 Every 2.0s: kubectl get hpa -n nodejs                                                                                                           Thu Sep 13 18:50:29 2018
@@ -114,4 +121,43 @@ load-generator    1         1         1            1           12m
 node-deployment   4         4         4            4           1h
 ```
 
-Watch HPA
+Now, delete the load generator.
+
+```
+root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# kubectl delete deploy/load-generator -n nodejs
+deployment "load-generator" deleted
+```
+
+verify that load has started coming down
+
+```
+root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# watch kubectl get hpa -n nodejs
+Every 2.0s: kubectl get hpa -n nodejs                                                                                                           Thu Sep 13 18:55:35 2018
+
+NAME              REFERENCE                    TARGETS     MINPODS   MAXPODS   REPLICAS   AGE
+node-deployment   Deployment/node-deployment   11% / 30%   2         10        5          19m
+```
+
+
+## Rolling update
+
+Go to nodejs-sample-app-kubernetes/kubernetes DIR run the script to do rolling update.
+
+```
+root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes# ./rolling-update.sh
+deployment "node-deployment" scaled
+deployment "node-deployment" image updated
+```
+
+
+## Blue green deployment 
+
+1. Deploy new version of your app with updated label
+2. Change selector at svc level to match new label
+
+```
+root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes# ./blue-green-update.sh
+deployment "node-green-deployment" created
+Warning: kubectl apply should be used on resource created by either kubectl create --save-config or kubectl apply
+service "nodeapp-svc" configured
+```
