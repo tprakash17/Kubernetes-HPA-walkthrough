@@ -9,7 +9,7 @@ This is sample nodejs app which exposes 2 end-points:
 
 1. clone repo
    ```
-   git clone git@github.com:tprakash17/nodejs-sample-app-kubernetes.git
+   git clone https://github.com/tprakash17/nodejs-sample-app-kubernetes.git
    cd nodejs-sample-app-kubernetes/node_app
    ```
 2. Build docker image
