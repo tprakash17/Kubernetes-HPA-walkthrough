@@ -158,3 +158,15 @@ deployment "node-green-deployment" created
 Warning: kubectl apply should be used on resource created by either kubectl create --save-config or kubectl apply
 service "nodeapp-svc" configured
 ```
+
+
+## Clean UP
+
+```
+root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# kubectl delete -f .
+deployment "node-green-deployment" deleted
+deployment "node-deployment" deleted
+service "nodeapp-svc" deleted
+
+root@Blr-Tarunp:~/nodejs-sample-app-kubernetes/kubernetes/artifacts# kubectl delete hpa node-deployment -n nodejs
+```
