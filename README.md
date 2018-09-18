@@ -74,7 +74,7 @@ Session Affinity:       None
 Events:                 <none>
 ```
 
-You can access the application by http://NODEIP:<SERVICE-PORT> or http://NODEIP:<SERVICE-PORT>/version (in my case it was 30787) 
+You can access the application by http://NODEIP:SERVICE-PORT or http://NODEIP:SERVICE-PORT/version (in my case it was 30787) 
 
 ## Horizontal scaling  
 
