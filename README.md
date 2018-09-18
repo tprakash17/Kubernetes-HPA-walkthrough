@@ -98,9 +98,10 @@ $ kubectl run -i --tty load-generator --image=busybox /bin/sh -n nodejs
 Hit enter for command prompt
 
 # while true; do wget -q -O- http://10.43.80.18; done
+```
 
 Note: Change the clusterIP it may be different be when you deploy.
-```
+
 
 ## Watch scaler 
 
