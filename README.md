@@ -100,7 +100,7 @@ Hit enter for command prompt
 # while true; do wget -q -O- http://10.43.80.18; done
 ```
 
-Note: Change the clusterIP it may be different be when you deploy.
+Note: Change the clusterIP it may be different when you deploy.
 
 
 ## Watch scaler 
